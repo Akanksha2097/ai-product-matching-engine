@@ -9,7 +9,7 @@ Updated: 2026-11-04 (US Central time)
 - Ingested 28 real Open Food Facts records into Parquet and an attributed offline CSV; benchmark and food catalogs stay separate.
 - Downloaded and evaluated the 9,575-pair DeepMatcher Abt–Buy benchmark locally without redistributing source records. Implemented MiniLM, FAISS retrieval, and a trained logistic hybrid.
 - Added SQLite human-review history and export.
-- Published and verified the public repository: https://github.com/Akanksha2097/ai-product-matching-engine on `main`.
+- Published and verified the public repository: https://github.com/Akanksha2097/ai-product-matching-engine on `main`. Its About section links to the live app.
 - Deployed and loaded the free Streamlit Community Cloud app: https://matchwise-ai-akanksha2097.streamlit.app/ . The initial Poetry build and a later `src` import failed; `requirements.txt` and installing the local package resolved both failures.
 - Captured hosted-app screenshots in `docs/streamlit-overview.png`, `docs/streamlit-matcher.png`, `docs/streamlit-batch.png`, and `docs/streamlit-evaluation.png`. Fixed a dark-theme/light-background contrast issue after visual inspection.
 
@@ -19,7 +19,7 @@ Updated: 2026-11-04 (US Central time)
 - Synthetic fixture evaluation ran: precision 1.0, recall 0.6, F1 0.75, false-positive rate 0.0 on 8 rows. These are smoke-test figures, not benchmark claims.
 - Python compilation passed. Open Food Facts and DeepMatcher source URLs returned HTTP 200.
 - Hosted browser checks passed for Overview, Product Matcher query entry, batch CSV upload using `data/demo/batch_sample.csv`, visible batch results and download button, Human Review `needs_evidence` save confirmation and export button, Model Evaluation charts/confusion matrix, and Technical Architecture.
-- GitHub Actions run 5 passed on commit `29cfa69`; earlier run 1's missing dev dependency was fixed.
+- GitHub Actions run 7 passed on commit `8194bf5`; earlier run 1's missing dev dependency was fixed.
 
 ## Remaining / limitations
 
