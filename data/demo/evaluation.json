@@ -1,0 +1,60 @@
+{
+  "provenance": "local synthetic smoke fixture; not ground truth",
+  "n": 8,
+  "precision": 1.0,
+  "recall": 0.6,
+  "f1": 0.75,
+  "false_positive_rate": 0.0,
+  "confusion_matrix": [
+    [
+      3,
+      0
+    ],
+    [
+      2,
+      3
+    ]
+  ],
+  "rows": [
+    {
+      "label": 1,
+      "prediction": 0,
+      "score": 0.6001
+    },
+    {
+      "label": 1,
+      "prediction": 1,
+      "score": 0.9699
+    },
+    {
+      "label": 1,
+      "prediction": 1,
+      "score": 0.7349
+    },
+    {
+      "label": 1,
+      "prediction": 0,
+      "score": 0.7134
+    },
+    {
+      "label": 1,
+      "prediction": 1,
+      "score": 0.7425
+    },
+    {
+      "label": 0,
+      "prediction": 0,
+      "score": 0.7474
+    },
+    {
+      "label": 0,
+      "prediction": 0,
+      "score": 0.7349
+    },
+    {
+      "label": 0,
+      "prediction": 0,
+      "score": 0.4844
+    }
+  ]
+}

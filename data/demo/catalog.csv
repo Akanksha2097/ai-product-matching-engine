@@ -1,0 +1,11 @@
+product_id,brand,title,category,quantity,unit
+off-001,HP,HP 67XL Black Ink Cartridge,office,2,cartridge
+off-002,Hewlett Packard,Hewlett Packard 67 XL High Yield Black Ink,office,2,cartridge
+off-003,HP,HP 67 Black Ink Cartridge,office,1,cartridge
+off-004,Canon,Canon PG-245 Black Ink Cartridge,office,1,cartridge
+off-005,Apple,Apple AirPods Pro 2nd Generation USB-C,electronics,1,each
+off-006,Apple,Apple AirPods 3rd Generation Lightning,electronics,1,each
+off-007,Sony,Sony WH-1000XM5 Wireless Noise Cancelling Headphones,electronics,1,each
+off-008,Sony,Sony WH-1000XM4 Wireless Headphones,electronics,1,each
+off-009,Clif,Clif Bar Chocolate Chip 12 pack,snacks,12,bar
+off-010,Clif,Clif Bar Chocolate Chip Single,snacks,1,bar

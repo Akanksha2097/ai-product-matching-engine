@@ -1,0 +1,9 @@
+query_id,reference_id,label,query_title
+q-001,off-001,1,HP 67 XL black high yield cartridge
+q-002,off-003,1,HP 67 black ink cartridge
+q-003,off-005,1,Apple AirPods Pro 2 USB C
+q-004,off-008,1,Sony XM4 noise cancelling headphones
+q-005,off-010,1,Clif chocolate chip bar one
+q-006,off-003,0,HP 67XL black cartridge two pack
+q-007,off-006,0,Apple AirPods Pro 2 USB C
+q-008,off-010,0,Clif chocolate chip 12 pack
