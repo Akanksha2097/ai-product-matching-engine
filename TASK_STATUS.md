@@ -24,6 +24,6 @@ Updated: 2026-11-04 (latest verification)
 - Complete remaining API error and pack/variant edge-case checks; only 5 tests currently exist.
 - Benchmark accuracy is measured on Abt–Buy, not the 28-record food demo. The app's interactive hybrid remains heuristic and has no validated threshold on the food domain.
 - Produce verified screenshots and complete user-flow checks before treating the dashboard as portfolio-ready.
-- First GitHub Actions run failed because the clean environment lacked `httpx2`; fixed the dev dependency and a follow-up push/CI run is pending.
+- First GitHub Actions run failed because the clean environment lacked `httpx2`; fixed the dev dependency. Run 2 completed successfully on commit 7fdb679.
 - Streamlit Community Cloud is signed out in the shared browser; user sign-in is required for deployment.
 - Streamlit Community Cloud and Databricks status require account-level access; no paid resource will be provisioned.
