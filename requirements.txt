@@ -1,4 +1,5 @@
 # Streamlit Community Cloud uses this pip file instead of treating pyproject.toml as Poetry.
+-e .
 duckdb>=1.1
 fastapi>=0.115
 numpy>=1.26
