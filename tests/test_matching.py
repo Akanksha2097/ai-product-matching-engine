@@ -35,6 +35,19 @@ def test_api_contract():
     assert client.post("/match", json={"query": "x"}).status_code == 422
 
 
+def test_api_rejects_invalid_scoring_options_and_large_batches():
+    client = TestClient(app)
+    assert client.post("/match", json={"query": "Sony XM4", "k": 0}).status_code == 422
+    assert client.post("/match", json={"query": "Sony XM4", "model": "unknown"}).status_code == 422
+    assert client.post("/batch-match", json=[{"query": "Sony XM4"}] * 1001).status_code == 413
+
+
+def test_api_model_info_discloses_uncalibrated_scores():
+    response = TestClient(app).get("/model-info")
+    assert response.status_code == 200
+    assert "not calibrated probabilities" in response.json()["score_note"]
+
+
 def test_review_persists(tmp_path):
     store = ReviewStore(tmp_path / "reviews.sqlite")
     store.record("HP 67 XL", "off-001", "reject", "variant mismatch")
