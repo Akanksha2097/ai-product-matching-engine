@@ -4,7 +4,7 @@ from pathlib import Path
 
 import pandas as pd
 from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator
 
 from src.models.matching import MatchingEngine
 from src.preprocessing.normalization import normalize_catalog
@@ -18,6 +18,15 @@ class MatchRequest(BaseModel):
     query: str = Field(min_length=2, max_length=500)
     k: int = Field(default=5, ge=1, le=20)
     model: str = Field(default="hybrid", pattern="^(hybrid|fuzzy|tfidf)$")
+
+    @field_validator("query")
+    @classmethod
+    def normalize_query(cls, value: str) -> str:
+        """Reject blank descriptions and remove accidental surrounding whitespace."""
+        value = value.strip()
+        if len(value) < 2:
+            raise ValueError("query must contain at least two non-whitespace characters")
+        return value
 
 
 @app.get("/health")

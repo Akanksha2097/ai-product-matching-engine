@@ -6,4 +6,4 @@
 - Scores are not calibrated probabilities.
 - Human reviews persist to local SQLite, but Streamlit Community Cloud filesystem storage is ephemeral; users should export review history.
 - The benchmark split is disjoint by left-side entity only; right-side entities may recur. Validation-selected thresholds did not guarantee the same precision on test.
-- No live deployment or GitHub publication is claimed until independently verified.
+- The public Streamlit deployment was verified on November 4, 2026, but Community Cloud uptime and local-file persistence are not guaranteed.

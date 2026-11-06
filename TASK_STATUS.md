@@ -1,6 +1,6 @@
 # MatchWise AI — Task Status
 
-Updated: 2026-11-04 (US Central time)
+Updated: 2026-11-05 (US Central time)
 
 ## Completed and verified
 
@@ -12,11 +12,13 @@ Updated: 2026-11-04 (US Central time)
 - Published and verified the public repository: https://github.com/Akanksha2097/ai-product-matching-engine on `main`. Its About section links to the live app.
 - Deployed and loaded the free Streamlit Community Cloud app: https://matchwise-ai-akanksha2097.streamlit.app/ . The initial Poetry build and a later `src` import failed; `requirements.txt` and installing the local package resolved both failures.
 - Captured hosted-app screenshots in `docs/streamlit-overview.png`, `docs/streamlit-matcher.png`, `docs/streamlit-batch.png`, and `docs/streamlit-evaluation.png`. Fixed a dark-theme/light-background contrast issue after visual inspection.
+- Completed a Project 4 rubric audit: documented the base system and applied-AI extension, added Mermaid architecture source, three end-to-end examples, guardrail examples, a complete model card, and an AI-collaboration reflection.
+- Corrected model-identifier handling so `XM4` is compatible with `WH-1000XM4` while `67` remains distinct from `67 XL`. Matching now over-retrieves candidates before final ranking so a conflicted lexical hit cannot hide the correct variant.
 
 ## Verification
 
-- Ruff passed; pytest passed (7 tests, including all Streamlit pages and API validation checks).
-- Synthetic fixture evaluation ran: precision 1.0, recall 0.6, F1 0.75, false-positive rate 0.0 on 8 rows. These are smoke-test figures, not benchmark claims.
+- Ruff passed; pytest passed (9 tests, including variant regressions, all Streamlit pages, and API validation checks).
+- Synthetic fixture evaluation ran: precision 1.0, recall 0.8, F1 0.8889, false-positive rate 0.0 on 8 rows. These are smoke-test figures, not benchmark claims.
 - Python compilation passed. Open Food Facts and DeepMatcher source URLs returned HTTP 200.
 - Hosted browser checks passed for Overview, Product Matcher query entry, batch CSV upload using `data/demo/batch_sample.csv`, visible batch results and download button, Human Review `needs_evidence` save confirmation and export button, Model Evaluation charts/confusion matrix, and Technical Architecture.
 - GitHub Actions run 7 passed on commit `8194bf5`; earlier run 1's missing dev dependency was fixed.
@@ -24,7 +26,7 @@ Updated: 2026-11-04 (US Central time)
 ## Remaining / limitations
 
 - CI runs on every push; the newest run should always be checked before sharing a changed revision.
-- More pack/variant edge-case tests would improve rigor; the current suite has 7 tests.
+- More multilingual, alias, and category-specific edge-case tests would improve rigor; the current suite has 9 tests.
 - Benchmark accuracy is measured on Abt–Buy, not the 28-record food demo. The app's interactive hybrid remains heuristic and has no validated threshold on the food domain.
 - The held-out split is by left-side entity; right-side entities can recur across partitions. The hybrid underperformed TF-IDF at this operating point.
 - Databricks notebook source exists in `notebooks/databricks/matchwise_demo.py` but has not been imported or executed. A workspace ID screenshot alone does not provide a workspace URL or authenticated session; no Databricks CLI or connector is available. This optional extension does not block the core project.

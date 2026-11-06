@@ -25,9 +25,39 @@ def token_similarity(a: str, b: str) -> float:
 
 
 def model_tokens(text: str) -> set[str]:
-    """Keep model suffixes; 67 and 67XL must not collapse to one variant."""
-    return {token for token in re.findall(r"\b[a-z]*\d+[a-z0-9-]*\b", text.lower())
-            if token not in {"1", "2", "3", "6", "12"}}
+    """Extract model identifiers while preserving suffixes such as ``XL``."""
+    raw_tokens = re.findall(r"[a-z]*\d+[a-z0-9]*|[a-z]+", text.lower())
+    tokens: set[str] = set()
+    index = 0
+    while index < len(raw_tokens):
+        token = raw_tokens[index]
+        if token.isdigit() and index + 1 < len(raw_tokens):
+            suffix = raw_tokens[index + 1]
+            if suffix in {"xl", "pro", "max", "plus", "mini"}:
+                tokens.add(token + suffix)
+                index += 2
+                continue
+        if any(character.isdigit() for character in token) and token not in {
+            "1",
+            "2",
+            "3",
+            "6",
+            "12",
+        }:
+            tokens.add(token)
+        index += 1
+    return tokens
+
+
+def model_identifiers_compatible(left: set[str], right: set[str]) -> bool:
+    """Allow abbreviated identifiers such as XM4 to match WH-1000XM4."""
+    return any(
+        first == second
+        or (len(first) >= 3 and second.endswith(first))
+        or (len(second) >= 3 and first.endswith(second))
+        for first in left
+        for second in right
+    )
 
 
 class MatchingEngine:
@@ -47,7 +77,11 @@ class MatchingEngine:
                                  and query_quantity != float(candidate_quantity))
         query_models = model_tokens(query)
         candidate_models = model_tokens(row.title_norm)
-        model_conflict = bool(query_models and candidate_models and not query_models & candidate_models)
+        model_conflict = bool(
+            query_models
+            and candidate_models
+            and not model_identifiers_compatible(query_models, candidate_models)
+        )
         if model == "fuzzy":
             score = text
         elif model == "tfidf":
@@ -69,11 +103,12 @@ class MatchingEngine:
         return score, reasons
 
     def match(self, query: str, k: int = 5, model: str = "hybrid") -> list[MatchResult]:
-        candidates = self.retriever.retrieve(query, k=k)
+        candidate_k = min(len(self.catalog), max(k, k * 5))
+        candidates = self.retriever.retrieve(query, k=candidate_k)
         scored = []
         for _, row in candidates.iterrows():
             score, reasons = self.score_candidate(query, row, model)
             conflict = any(reason.startswith("Conflicting") for reason in reasons)
             decision = "reject" if conflict else "auto-match" if score >= .78 else "review" if score >= .48 else "reject"
             scored.append(MatchResult(str(row.product_id), round(score, 4), model, decision, reasons))
-        return sorted(scored, key=lambda x: x.score, reverse=True)
+        return sorted(scored, key=lambda x: x.score, reverse=True)[:k]

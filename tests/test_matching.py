@@ -25,6 +25,25 @@ def test_engine_flags_pack_conflict():
     assert "Conflicting package quantity" in reasons
 
 
+def test_engine_accepts_abbreviated_model_identifier():
+    catalog = normalize_catalog(pd.read_csv(ROOT / "data/demo/catalog.csv"))
+    result = MatchingEngine(catalog).match("Sony XM4 headphones", k=1)[0]
+    assert result.product_id == "off-008"
+    assert "Conflicting model or variant identifier" not in result.reasons
+
+
+def test_engine_distinguishes_base_and_xl_variants():
+    catalog = normalize_catalog(pd.read_csv(ROOT / "data/demo/catalog.csv"))
+    engine = MatchingEngine(catalog)
+    base = catalog[catalog.product_id.eq("off-003")].iloc[0]
+    _, reasons = engine.score_candidate("HP 67 XL black ink cartridge", base)
+    assert "Conflicting model or variant identifier" in reasons
+    assert engine.match("HP 67 XL black ink cartridge", k=1)[0].product_id in {
+        "off-001",
+        "off-002",
+    }
+
+
 def test_api_contract():
     client = TestClient(app)
     assert client.get("/health").status_code == 200
@@ -39,6 +58,7 @@ def test_api_rejects_invalid_scoring_options_and_large_batches():
     client = TestClient(app)
     assert client.post("/match", json={"query": "Sony XM4", "k": 0}).status_code == 422
     assert client.post("/match", json={"query": "Sony XM4", "model": "unknown"}).status_code == 422
+    assert client.post("/match", json={"query": "   "}).status_code == 422
     assert client.post("/batch-match", json=[{"query": "Sony XM4"}] * 1001).status_code == 413
 
 
